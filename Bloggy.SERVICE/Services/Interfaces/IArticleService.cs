@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bloggy.CORE.Entities;
+using Bloggy.SERVICE.DTOs.Articles;
 
 namespace Bloggy.SERVICE.Services.Interfaces
 {
 	public interface IArticleService
 	{
-		Task<List<Article>> GetAllArticlesAsync();
+		Task<List<ArticleDTO>> GetAllArticlesAsync();
 	}
 }

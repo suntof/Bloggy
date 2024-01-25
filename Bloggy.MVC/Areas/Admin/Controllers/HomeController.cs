@@ -14,7 +14,7 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var articles = await _articleService.GetAllArticlesAsync();
-            return View();
+            return View(articles);
         }
     }
 }

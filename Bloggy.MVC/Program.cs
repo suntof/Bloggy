@@ -37,12 +37,12 @@ namespace Bloggy.MVC
 
 			app.UseEndpoints(endpoints =>
 			{
-				endpoints.MapAreaControllerRoute(
+					endpoints.MapAreaControllerRoute(
 					name: "Admin",
 					areaName: "Admin",
 					pattern: "Admin/{controller=Home}/{action=Index}/{id?}"
 					);
-				endpoints.MapDefaultControllerRoute();
+					endpoints.MapDefaultControllerRoute();
 			});
 
 			app.Run();
