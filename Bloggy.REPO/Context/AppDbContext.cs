@@ -5,11 +5,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Bloggy.CORE.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bloggy.REPO.Context
 {
-	public class AppDbContext : DbContext
+	public class AppDbContext : IdentityDbContext<AppUser,AppRole,Guid,AppUserClaim,AppUserRole,AppUserLogin,AppRoleClaim,AppUserToken>
 	{
 		protected AppDbContext()
 		{
@@ -26,6 +27,7 @@ namespace Bloggy.REPO.Context
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
+			base.OnModelCreating(builder);
 			builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 		}
 	}
