@@ -24,7 +24,8 @@ namespace Bloggy.REPO.Mappings
 				CreatedBy= "Admin Test",
 				CreatedDate = DateTime.Now,
 				IsDeleted = false,
-			});
+				UserId = Guid.Parse("AE7D6647-4259-4EC0-88C8-DD8A20A5048F")
+            });
 		}
 	}
 }

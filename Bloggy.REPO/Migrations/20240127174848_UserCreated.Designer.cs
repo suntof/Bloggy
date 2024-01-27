@@ -4,6 +4,7 @@ using Bloggy.REPO.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bloggy.REPO.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240127174848_UserCreated")]
+    partial class UserCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,21 +55,21 @@ namespace Bloggy.REPO.Migrations
                         new
                         {
                             Id = new Guid("e14438cc-d73b-4a83-a9ce-a2b8ae7a5d5a"),
-                            ConcurrencyStamp = "29f74173-d53b-4dd5-be46-fb1cb75cb226",
+                            ConcurrencyStamp = "c4070360-596b-4c03-9a93-fe2f04eaa150",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = new Guid("871f34ee-d9cc-4cef-a7eb-cdeec5fee1ff"),
-                            ConcurrencyStamp = "fc3df79d-d343-4545-b8f7-d691da59b7bb",
+                            ConcurrencyStamp = "7e76f91d-1788-4d62-a1c8-5524b4199bf7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("0294e37b-2112-4b3f-8334-c1fc65fe36ac"),
-                            ConcurrencyStamp = "3f9dfbd0-7fc3-4a68-b255-af42cbce968a",
+                            ConcurrencyStamp = "1e9af000-1f12-4650-8b47-ec76ddd5d384",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -121,9 +123,6 @@ namespace Bloggy.REPO.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ImageId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -163,8 +162,6 @@ namespace Bloggy.REPO.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -180,19 +177,18 @@ namespace Bloggy.REPO.Migrations
                         {
                             Id = new Guid("ae7d6647-4259-4ec0-88c8-dd8a20a5048f"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "caa39e1b-59a2-4586-ac90-1cc67335c428",
+                            ConcurrencyStamp = "7a26d7bb-8f51-4e49-b75f-700b89ad6453",
                             Email = "mustafasand@hotmail.com",
                             EmailConfirmed = true,
                             FirstName = "Mustafa",
-                            ImageId = new Guid("5aa0376e-d526-4fa5-8d48-5dda2d9cb585"),
                             LastName = "SANDIKCILAR",
                             LockoutEnabled = false,
                             NormalizedEmail = "MUSTAFASAND@HOTMAIL.COM",
                             NormalizedUserName = "MUSTAFASAND@HOTMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKHCqVFZ35cKUfLpoiSK21gNybVE7LeILTL3TIkwSFIXySfxJxXtM8rq37gv4TNvLw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELGAxqIM3HsN1KdM9q0AGWdSS/iMBfUdJWwJK+SVQe1TWwc3HXL1SuS0MO+e0KRTmA==",
                             PhoneNumber = "+905067600769",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "245a75c7-2a12-4738-a226-318841a15c9c",
+                            SecurityStamp = "64516a33-28b8-40a9-bcec-f262fe5c9ec5",
                             TwoFactorEnabled = false,
                             UserName = "mustafasand@hotmail.com"
                         },
@@ -200,19 +196,18 @@ namespace Bloggy.REPO.Migrations
                         {
                             Id = new Guid("84266068-1635-4a04-aa64-0780e4c1087a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b5535691-3a83-4178-a23b-e11653bfdcf8",
+                            ConcurrencyStamp = "399a6412-0e68-4438-8a9b-aea78102345e",
                             Email = "admin@hotmail.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
-                            ImageId = new Guid("5aa0376e-d526-4fa5-8d48-5dda2d9cb585"),
                             LastName = "User",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@HOTMAIL.COM",
                             NormalizedUserName = "ADMIN@HOTMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDrgpeFXVR3wBqTTOo/s9EmEL+KLGB9RSRPmMVHcVs6XG7WSAjE0mmlYN3uaS2tAlw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPA1vMWPThNzbOaLcsVmKrosBynQr+P/58Q1UJgrNrMGgbg1tz07Axq/rmSaTJPsAw==",
                             PhoneNumber = "+905069999999",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "62f5aa40-01ee-4b0b-964e-9bee9de9e8f5",
+                            SecurityStamp = "4807d560-aaaf-44a4-b5f7-2ca21bac2d2d",
                             TwoFactorEnabled = false,
                             UserName = "admin@hotmail.com"
                         });
@@ -337,7 +332,7 @@ namespace Bloggy.REPO.Migrations
                     b.Property<Guid>("GenreId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ImageId")
+                    b.Property<Guid>("ImageId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
@@ -353,9 +348,6 @@ namespace Bloggy.REPO.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("ViewCount")
                         .HasColumnType("int");
 
@@ -365,8 +357,6 @@ namespace Bloggy.REPO.Migrations
 
                     b.HasIndex("ImageId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Articles");
 
                     b.HasData(
@@ -375,12 +365,11 @@ namespace Bloggy.REPO.Migrations
                             Id = new Guid("15fd39a8-a3fc-46a1-b40b-5ae6825b4c5a"),
                             Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac varius augue. Phasellus molestie felis at ex aliquet mollis. Aliquam consectetur leo sit amet eros malesuada, vel elementum ante feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur fringilla dui nec tincidunt consequat. Proin eros.",
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 1, 28, 0, 30, 41, 433, DateTimeKind.Local).AddTicks(3257),
+                            CreatedDate = new DateTime(2024, 1, 27, 20, 48, 47, 612, DateTimeKind.Local).AddTicks(4316),
                             GenreId = new Guid("15fd39a8-a3fc-46a1-b40b-5ae6825b4c5a"),
                             ImageId = new Guid("5aa0376e-d526-4fa5-8d48-5dda2d9cb585"),
                             IsDeleted = false,
                             Title = "Deneme",
-                            UserId = new Guid("ae7d6647-4259-4ec0-88c8-dd8a20a5048f"),
                             ViewCount = 15
                         });
                 });
@@ -426,7 +415,7 @@ namespace Bloggy.REPO.Migrations
                         {
                             Id = new Guid("15fd39a8-a3fc-46a1-b40b-5ae6825b4c5a"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 1, 28, 0, 30, 41, 433, DateTimeKind.Local).AddTicks(4655),
+                            CreatedDate = new DateTime(2024, 1, 27, 20, 48, 47, 612, DateTimeKind.Local).AddTicks(4595),
                             IsDeleted = false,
                             Name = "ASP.Net Core"
                         });
@@ -477,7 +466,7 @@ namespace Bloggy.REPO.Migrations
                         {
                             Id = new Guid("5aa0376e-d526-4fa5-8d48-5dda2d9cb585"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 1, 28, 0, 30, 41, 433, DateTimeKind.Local).AddTicks(5393),
+                            CreatedDate = new DateTime(2024, 1, 27, 20, 48, 47, 612, DateTimeKind.Local).AddTicks(4864),
                             FileName = "images/testimage",
                             FileType = "jpg",
                             IsDeleted = false
@@ -491,17 +480,6 @@ namespace Bloggy.REPO.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Bloggy.CORE.Entities.AppUser", b =>
-                {
-                    b.HasOne("Bloggy.CORE.Entities.Image", "Image")
-                        .WithMany("Users")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("Bloggy.CORE.Entities.AppUserClaim", b =>
@@ -556,24 +534,13 @@ namespace Bloggy.REPO.Migrations
 
                     b.HasOne("Bloggy.CORE.Entities.Image", "Image")
                         .WithMany("Articles")
-                        .HasForeignKey("ImageId");
-
-                    b.HasOne("Bloggy.CORE.Entities.AppUser", "User")
-                        .WithMany("Articles")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Genre");
 
                     b.Navigation("Image");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Bloggy.CORE.Entities.AppUser", b =>
-                {
-                    b.Navigation("Articles");
                 });
 
             modelBuilder.Entity("Bloggy.CORE.Entities.Genre", b =>
@@ -584,8 +551,6 @@ namespace Bloggy.REPO.Migrations
             modelBuilder.Entity("Bloggy.CORE.Entities.Image", b =>
                 {
                     b.Navigation("Articles");
-
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

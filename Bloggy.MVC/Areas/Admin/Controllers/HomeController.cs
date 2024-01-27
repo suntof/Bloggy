@@ -1,9 +1,11 @@
 ﻿using Bloggy.SERVICE.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bloggy.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IArticleService _articleService;

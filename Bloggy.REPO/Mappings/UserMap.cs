@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bloggy.CORE.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -46,8 +47,49 @@ namespace Bloggy.REPO.Mappings
 
             // Each User can have many entries in the UserRole join table
             builder.HasMany<AppUserRole>().WithOne().HasForeignKey(ur => ur.UserId).IsRequired();
-        });
 
+            var superAdmin = new AppUser
+            {
+                Id = Guid.Parse("AE7D6647-4259-4EC0-88C8-DD8A20A5048F"),
+                UserName = "mustafasand@hotmail.com",
+                NormalizedUserName = "MUSTAFASAND@HOTMAIL.COM",
+                Email = "mustafasand@hotmail.com",
+                NormalizedEmail = "MUSTAFASAND@HOTMAIL.COM",
+                PhoneNumber = "+905067600769",
+                FirstName = "Mustafa",
+                LastName = "SANDIKCILAR",
+                PhoneNumberConfirmed = true,
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ImageId = Guid.Parse("5AA0376E-D526-4FA5-8D48-5DDA2D9CB585")
+            };
+            superAdmin.PasswordHash = CreatePasswordHash(superAdmin, "123");
+
+            var admin = new AppUser
+            {
+                Id = Guid.Parse("84266068-1635-4A04-AA64-0780E4C1087A"),
+                UserName = "admin@hotmail.com",
+                NormalizedUserName = "ADMIN@HOTMAIL.COM",
+                Email = "admin@hotmail.com",
+                NormalizedEmail = "ADMIN@HOTMAIL.COM",
+                PhoneNumber = "+905069999999",
+                FirstName = "Admin",
+                LastName = "User",
+                PhoneNumberConfirmed = false,
+                EmailConfirmed = false,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ImageId = Guid.Parse("5AA0376E-D526-4FA5-8D48-5DDA2D9CB585")
+            };
+            admin.PasswordHash = CreatePasswordHash(admin, "123");
+            
+            builder.HasData(superAdmin, admin);
         }
+        private string CreatePasswordHash(AppUser user, string password)
+        {
+            var passwordHasher = new PasswordHasher<AppUser>();
+            return passwordHasher.HashPassword(user, password);
+        }
+
+    }
 }
-}
+

@@ -18,9 +18,10 @@ namespace Bloggy.CORE.Entities
         public Guid GenreId { get; set; }
         public Genre Genre { get; set; }
 
-        public Guid ImageId { get; set; }
+        public Guid? ImageId { get; set; }
         public Image Image { get; set; }
 
-        
+        public Guid UserId { get; set; }
+        public AppUser User { get; set; }
     }
 }

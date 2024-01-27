@@ -1,6 +1,8 @@
+using Bloggy.CORE.Entities;
 using Bloggy.REPO.Context;
 using Bloggy.REPO.Extensions;
 using Bloggy.SERVICE.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bloggy.MVC
@@ -13,9 +15,38 @@ namespace Bloggy.MVC
 
 			builder.Services.LoadDataLayerExtensions(builder.Configuration);
 			builder.Services.LoadServiceLayerExtensions();
+			builder.Services.AddSession();
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+
+
+			builder.Services.AddIdentity<AppUser, AppRole>(x =>
+			{
+				x.Password.RequireNonAlphanumeric = false;
+				x.Password.RequireLowercase = false;
+				x.Password.RequireUppercase = false;
+			})
+				.AddRoleManager<RoleManager<AppRole>>()
+				.AddEntityFrameworkStores<AppDbContext>()
+				.AddDefaultTokenProviders();
+
+			builder.Services.ConfigureApplicationCookie(config =>
+			{
+				config.LoginPath = new PathString("/Admin/Authentication/Login");
+				config.LogoutPath = new PathString("/Admin/Authentication/Logout");
+				config.Cookie = new CookieBuilder
+				{
+					Name = "Bloggy",
+					HttpOnly = true,
+					SameSite = SameSiteMode.Strict,
+					SecurePolicy = CookieSecurePolicy.SameAsRequest //canlýya çýkýnca SameAsRequest yerine Always'i seç
+				};
+				config.SlidingExpiration = true;
+				config.ExpireTimeSpan = TimeSpan.FromDays(3);
+				config.AccessDeniedPath = new PathString("/Admin/Authentication/AccessDenied");
+
+			});
 			
 
 			var app = builder.Build();
@@ -31,8 +62,10 @@ namespace Bloggy.MVC
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
+			app.UseSession();
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
