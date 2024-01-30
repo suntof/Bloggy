@@ -3,11 +3,10 @@ using Bloggy.REPO.Context;
 using Bloggy.REPO.Extensions;
 using Bloggy.SERVICE.Extensions;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bloggy.MVC
 {
-	public class Program
+    public class Program
 	{
 		public static void Main(string[] args)
 		{
@@ -33,8 +32,8 @@ namespace Bloggy.MVC
 
 			builder.Services.ConfigureApplicationCookie(config =>
 			{
-				config.LoginPath = new PathString("/Admin/Authentication/Login");
-				config.LogoutPath = new PathString("/Admin/Authentication/Logout");
+				config.LoginPath = new PathString("/Admin/Auth/Login");
+				config.LogoutPath = new PathString("/Admin/Auth/Logout");
 				config.Cookie = new CookieBuilder
 				{
 					Name = "Bloggy",
@@ -44,7 +43,7 @@ namespace Bloggy.MVC
 				};
 				config.SlidingExpiration = true;
 				config.ExpireTimeSpan = TimeSpan.FromDays(3);
-				config.AccessDeniedPath = new PathString("/Admin/Authentication/AccessDenied");
+				config.AccessDeniedPath = new PathString("/Admin/Auth/AccessDenied");
 
 			});
 			
