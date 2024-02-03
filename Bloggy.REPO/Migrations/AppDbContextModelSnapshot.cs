@@ -53,21 +53,21 @@ namespace Bloggy.REPO.Migrations
                         new
                         {
                             Id = new Guid("e14438cc-d73b-4a83-a9ce-a2b8ae7a5d5a"),
-                            ConcurrencyStamp = "eccfb8d8-32cc-4da2-b634-c9aa94531c41",
+                            ConcurrencyStamp = "5ce68cf5-5993-4703-ac87-a6e99716ddd7",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = new Guid("871f34ee-d9cc-4cef-a7eb-cdeec5fee1ff"),
-                            ConcurrencyStamp = "028bddb8-edbb-4d98-9e83-82adf4fded4a",
+                            ConcurrencyStamp = "5cb8de89-4140-4378-9a71-32ad73a6b316",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("0294e37b-2112-4b3f-8334-c1fc65fe36ac"),
-                            ConcurrencyStamp = "6f525c5d-a28f-455c-ad1a-621e9999deb6",
+                            ConcurrencyStamp = "55f2ff5a-e56b-4a91-b542-f1f8f0883700",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -180,7 +180,7 @@ namespace Bloggy.REPO.Migrations
                         {
                             Id = new Guid("ae7d6647-4259-4ec0-88c8-dd8a20a5048f"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2528e90f-8914-4cbc-921c-8c892d6014fb",
+                            ConcurrencyStamp = "b9597cca-afc7-4853-90ba-0eb9b0072731",
                             Email = "mustafasand@hotmail.com",
                             EmailConfirmed = true,
                             FirstName = "Mustafa",
@@ -189,10 +189,10 @@ namespace Bloggy.REPO.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MUSTAFASAND@HOTMAIL.COM",
                             NormalizedUserName = "MUSTAFASAND@HOTMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBxmorazWqp6tPvfj4u5AC9c+3ubUAfIHDQMTbhdMIIHF7lJb8cMiLhaZ3mhhT5NHA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL8i2klqPE9VSKkBOOpXWOU/XBNX9n5T+xAmvW+XjQbDUnJrFDIKJTLtgAyIxw147w==",
                             PhoneNumber = "+905067600769",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "2f154624-7fff-4881-a92d-f36b15d013fa",
+                            SecurityStamp = "776c3e38-f49e-4917-bf9f-2c60d886fcf0",
                             TwoFactorEnabled = false,
                             UserName = "mustafasand@hotmail.com"
                         },
@@ -200,7 +200,7 @@ namespace Bloggy.REPO.Migrations
                         {
                             Id = new Guid("84266068-1635-4a04-aa64-0780e4c1087a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f5284850-9a5a-4719-a6cd-c193f36912ed",
+                            ConcurrencyStamp = "e3f971f7-504b-4101-8798-93405f5ddcaa",
                             Email = "admin@hotmail.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -209,10 +209,10 @@ namespace Bloggy.REPO.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@HOTMAIL.COM",
                             NormalizedUserName = "ADMIN@HOTMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPc5qKORKJo70UCaKFVstZ0Q6JI+Nf+xjw4VGdtN4RTU8waX4YQMxF25zbRGVrBr3A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKMzDoyLa4AEHoDbfxJtG78lDOk2LvkuMOJiSMEsh26jCY9iw/YT3asAPdyP0Z7zGw==",
                             PhoneNumber = "+905069999999",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "82b82772-2019-470c-aa8c-df57be5423a8",
+                            SecurityStamp = "afb3e751-f44b-4596-b542-79c93b56d6d4",
                             TwoFactorEnabled = false,
                             UserName = "admin@hotmail.com"
                         });
@@ -375,7 +375,7 @@ namespace Bloggy.REPO.Migrations
                             Id = new Guid("15fd39a8-a3fc-46a1-b40b-5ae6825b4c5a"),
                             Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac varius augue. Phasellus molestie felis at ex aliquet mollis. Aliquam consectetur leo sit amet eros malesuada, vel elementum ante feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur fringilla dui nec tincidunt consequat. Proin eros.",
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 1, 30, 20, 11, 16, 652, DateTimeKind.Local).AddTicks(3977),
+                            CreatedDate = new DateTime(2024, 2, 3, 21, 4, 57, 58, DateTimeKind.Local).AddTicks(9181),
                             GenreId = new Guid("15fd39a8-a3fc-46a1-b40b-5ae6825b4c5a"),
                             ImageId = new Guid("5aa0376e-d526-4fa5-8d48-5dda2d9cb585"),
                             IsDeleted = false,
@@ -426,7 +426,7 @@ namespace Bloggy.REPO.Migrations
                         {
                             Id = new Guid("15fd39a8-a3fc-46a1-b40b-5ae6825b4c5a"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 1, 30, 20, 11, 16, 652, DateTimeKind.Local).AddTicks(4431),
+                            CreatedDate = new DateTime(2024, 2, 3, 21, 4, 57, 58, DateTimeKind.Local).AddTicks(9427),
                             IsDeleted = false,
                             Name = "ASP.Net Core"
                         });
@@ -477,7 +477,7 @@ namespace Bloggy.REPO.Migrations
                         {
                             Id = new Guid("5aa0376e-d526-4fa5-8d48-5dda2d9cb585"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 1, 30, 20, 11, 16, 652, DateTimeKind.Local).AddTicks(4636),
+                            CreatedDate = new DateTime(2024, 2, 3, 21, 4, 57, 58, DateTimeKind.Local).AddTicks(9570),
                             FileName = "images/testimage",
                             FileType = "jpg",
                             IsDeleted = false

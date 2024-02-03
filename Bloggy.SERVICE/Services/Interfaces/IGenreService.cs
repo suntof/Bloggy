@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Bloggy.CORE.Entities;
-using Bloggy.SERVICE.DTOs.Articles;
+using Bloggy.SERVICE.DTOs.Genres;
 
 namespace Bloggy.SERVICE.Services.Interfaces
 {
-	public interface IArticleService
+	public interface IGenreService
 	{
-		Task<List<ArticleDTO>> GetAllArticlesWithCategoryNonDeletedAsync();
+		public Task<List<GenreDTO>> GetAllGenresNonDeleted();
 	}
 }

@@ -21,10 +21,10 @@ namespace Bloggy.SERVICE.Services.Concrete
 			_unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<List<ArticleDTO>> GetAllArticlesAsync()
+        public async Task<List<ArticleDTO>> GetAllArticlesWithCategoryNonDeletedAsync()
 		{
 			
-			var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync();
+			var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x=>x.IsDeleted == false, x=>x.Genre);
             var map = _mapper.Map<List<ArticleDTO>>(articles);
             return map;
         }

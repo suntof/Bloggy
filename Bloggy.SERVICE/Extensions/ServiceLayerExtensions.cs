@@ -22,6 +22,7 @@ namespace Bloggy.SERVICE.Extensions
 
             var assembly = Assembly.GetExecutingAssembly();
             services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IGenreService, GenreService>();
 
             services.AddAutoMapper(assembly);
 
