@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -8,8 +9,11 @@ using Bloggy.REPO.Concretes;
 using Bloggy.REPO.Context;
 using Bloggy.REPO.Interfaces;
 using Bloggy.REPO.UnitOfWorks;
+using Bloggy.SERVICE.FluentValidations;
 using Bloggy.SERVICE.Services.Concrete;
 using Bloggy.SERVICE.Services.Interfaces;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,6 +29,13 @@ namespace Bloggy.SERVICE.Extensions
             services.AddScoped<IGenreService, GenreService>();
 
             services.AddAutoMapper(assembly);
+
+            services.AddControllersWithViews().AddFluentValidation(opt =>
+            {
+                opt.RegisterValidatorsFromAssemblyContaining<ArticleValidator>();
+                opt.DisableDataAnnotationsValidation = true;
+                opt.ValidatorOptions.LanguageManager.Culture = new CultureInfo("tr");
+            });
 
             return services;
         }

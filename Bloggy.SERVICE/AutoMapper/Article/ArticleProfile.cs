@@ -16,6 +16,7 @@ namespace Bloggy.SERVICE.AutoMapper.Articles
             CreateMap<ArticleDTO, Article>().ReverseMap();
             CreateMap<ArticleUpdateDTO, Article>().ReverseMap();
             CreateMap<ArticleUpdateDTO, ArticleDTO>().ReverseMap();
+            CreateMap<ArticleAddDTO, Article>().ReverseMap();
         }
     }
 }
