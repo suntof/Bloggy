@@ -11,5 +11,9 @@ namespace Bloggy.SERVICE.Services.Interfaces
 	public interface IArticleService
 	{
 		Task<List<ArticleDTO>> GetAllArticlesWithCategoryNonDeletedAsync();
+		Task<ArticleDTO> GetArticleWithGenreNonDeletedAsync(Guid articleId);
+		Task CreateArticleAsync(ArticleAddDTO articleAddDTO);
+		Task UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO);
+		Task SafeDeleteArticleAsync(Guid articleId);
 	}
 }

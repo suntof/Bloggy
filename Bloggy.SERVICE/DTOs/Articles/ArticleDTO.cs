@@ -11,6 +11,7 @@ namespace Bloggy.SERVICE.DTOs.Articles
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
+        public string Content { get; set; }
         public GenreDTO Genre { get; set; }
         public int ViewCount { get; set; }
         public DateTime CreateDate { get; set; }
