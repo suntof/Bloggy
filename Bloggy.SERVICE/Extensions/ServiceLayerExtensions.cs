@@ -14,6 +14,7 @@ using Bloggy.SERVICE.Services.Concrete;
 using Bloggy.SERVICE.Services.Interfaces;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,6 +28,8 @@ namespace Bloggy.SERVICE.Extensions
             var assembly = Assembly.GetExecutingAssembly();
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IGenreService, GenreService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAutoMapper(assembly);
 

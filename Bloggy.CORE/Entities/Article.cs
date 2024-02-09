@@ -10,6 +10,19 @@ namespace Bloggy.CORE.Entities
 {
 	public class Article : BaseEntity 
 	{
+		public Article()
+		{
+
+		}
+		public Article(string title, string content, Guid userId, string createdBy, Guid genreId, Guid imageId)
+		{
+			Title = title;
+			Content = content;
+			UserId = userId;
+			GenreId = genreId ;
+			ImageId = imageId;
+			CreatedBy = createdBy;
+		}
 		public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }

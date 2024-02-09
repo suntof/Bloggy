@@ -5,6 +5,7 @@ using Bloggy.SERVICE.Extensions;
 using Bloggy.SERVICE.Services.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 
 namespace Bloggy.MVC.Areas.Admin.Controllers
 {
@@ -15,13 +16,15 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
 		private readonly IGenreService _genreService;
 		private readonly IMapper _mapper;
         private readonly IValidator<Article> _validator;
+		private readonly IToastNotification _toastNotification;
 
-		public ArticleController(IArticleService articleService, IGenreService genreService, IMapper mapper, IValidator<Article> validator)
+		public ArticleController(IArticleService articleService, IGenreService genreService, IMapper mapper, IValidator<Article> validator, IToastNotification toastNotification)
         {
             _articleService = articleService;
 			_genreService = genreService;
 			_mapper = mapper;
             _validator = validator;
+			_toastNotification = toastNotification;
 		}
         public async Task<IActionResult> Index()
         {
@@ -32,6 +35,7 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Add()
         {
             var genres = await _genreService.GetAllGenresNonDeleted();
+            
             return View(new ArticleAddDTO { Genres = genres } );
         }
 		[HttpPost]
@@ -43,6 +47,7 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
             if (result.IsValid)
             {
 				await _articleService.CreateArticleAsync(articleAddDTO);
+				_toastNotification.AddSuccessToastMessage("Makaleniz başarı ile eklendi");
 				return RedirectToAction("Index", "Article", new { Area = "Admin" });
 			}
             else
@@ -72,12 +77,14 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
             if (result.IsValid)
             {
 				await _articleService.UpdateArticleAsync(articleUpdateDTO);
+				_toastNotification.AddSuccessToastMessage("Makaleniz başarı ile güncellendi");
+				return RedirectToAction("Index", "Article", new { Area = "Admin" });
 			}
             else
             {
 				result.AddToModelState(this.ModelState);
 			}
-             
+            
             var genres = await _genreService.GetAllGenresNonDeleted();
             articleUpdateDTO.Genres = genres;
 
@@ -87,7 +94,8 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Delete (Guid articleId)
         {
             await _articleService.SafeDeleteArticleAsync(articleId);
-            return RedirectToAction("Index", "Article", new { Area = "Admin" });
+			_toastNotification.AddSuccessToastMessage("Makaleniz başarı ile silindi");
+			return RedirectToAction("Index", "Article", new { Area = "Admin" });
 		}
 	}
 }

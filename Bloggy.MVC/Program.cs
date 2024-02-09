@@ -3,6 +3,7 @@ using Bloggy.REPO.Context;
 using Bloggy.REPO.Extensions;
 using Bloggy.SERVICE.Extensions;
 using Microsoft.AspNetCore.Identity;
+using NToastNotify;
 
 namespace Bloggy.MVC
 {
@@ -17,7 +18,12 @@ namespace Bloggy.MVC
 			builder.Services.AddSession();
 
 			// Add services to the container.
-			builder.Services.AddControllersWithViews();
+			builder.Services.AddControllersWithViews()
+				.AddNToastNotifyToastr( new ToastrOptions()
+				{
+					PositionClass = ToastPositions.TopCenter,
+					TimeOut = 3000,
+				});
 
 
 			builder.Services.AddIdentity<AppUser, AppRole>(x =>
@@ -58,6 +64,7 @@ namespace Bloggy.MVC
 				app.UseHsts();
 			}
 
+			app.UseNToastNotify();
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
