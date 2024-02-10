@@ -10,6 +10,7 @@ using Bloggy.REPO.Context;
 using Bloggy.REPO.Interfaces;
 using Bloggy.REPO.UnitOfWorks;
 using Bloggy.SERVICE.FluentValidations;
+using Bloggy.SERVICE.Helpers.Images;
 using Bloggy.SERVICE.Services.Concrete;
 using Bloggy.SERVICE.Services.Interfaces;
 using FluentValidation;
@@ -28,8 +29,10 @@ namespace Bloggy.SERVICE.Extensions
             var assembly = Assembly.GetExecutingAssembly();
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<IImageHelper, ImageHelper>();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAutoMapper(assembly);
 

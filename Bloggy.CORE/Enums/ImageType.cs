@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bloggy.REPO.ImageHelper
+namespace Bloggy.CORE.Enums
 {
-	public class ImageHelper : IImageHelper
+	public enum ImageType
 	{
-
+		User = 0,
+		Post = 1,
 	}
 }

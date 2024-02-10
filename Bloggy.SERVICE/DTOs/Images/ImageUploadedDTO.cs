@@ -8,6 +8,6 @@ namespace Bloggy.SERVICE.DTOs.Images
 {
 	public class ImageUploadedDTO
 	{
-        public string Name { get; set; }
+        public string FullName { get; set; }
     }
 }

@@ -21,7 +21,7 @@
 
 						</div>
 						<br />
-						
+
 						<br />
 						<div>
 							<label asp-for="Title" id="defaultFormControlInput" class="form-label">Başlık</label>
@@ -37,11 +37,18 @@
 						</div>
 					</div>
 					<div class="card-body">
-
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+						<div>
+							<label asp-for="Photo" for="defaultFormControlInput" class="form-label">Resim Seçiniz</label>
+							<input asp-for="Photo" type="file" accept="image/*" class="form-control mb-3" id="defaultFormControlInput" aria-describedby="defaultFormControlHelp">
+							<span asp-validation-for="Photo" class="text-danger"></span>
 						</div>
 					</div>
+
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+					</div>
+
 				</form>
 			</div>
 		</div>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bloggy.CORE.Entities;
 using Bloggy.SERVICE.DTOs.Genres;
 
 namespace Bloggy.SERVICE.DTOs.Articles
@@ -15,6 +16,7 @@ namespace Bloggy.SERVICE.DTOs.Articles
         public GenreDTO Genre { get; set; }
         public int ViewCount { get; set; }
         public DateTime CreateDate { get; set; }
+        public Image Image { get; set; }
         public string CreatedBy { get; set; }
         public bool IsDeleted { get; set; }
     }
