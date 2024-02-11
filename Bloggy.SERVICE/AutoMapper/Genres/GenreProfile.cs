@@ -14,6 +14,8 @@ namespace Bloggy.SERVICE.AutoMapper.Genres
 		public GenreProfile() 
 		{ 
 			CreateMap<GenreDTO, Genre>().ReverseMap();
+			CreateMap<GenreAddDTO, Genre>().ReverseMap();
+			CreateMap<GenreUpdateDTO, Genre>().ReverseMap();
 		}
 	}
 }
