@@ -1,0 +1,60 @@
+﻿@model List<GenreDTO>
+
+<div class="container-xxl flex-grow-1 container-p-y">
+
+	<h4 class="py-3 mb-4">
+		<span class="text-muted fw-light">Silinmiş Tür Yönetimi /</span>  Makale Türleri
+	</h4>
+
+	<!-- Basic Bootstrap Table -->
+	<div class="card">
+
+		<div class="table-responsive text-nowrap m-3">
+			
+			<table class="table table-bordered" id="GenresTable" width="100%" cellspacing="0">
+				<thead>
+					<tr>
+						<th>İsim</th>
+						<th>Oluşturma Tarihi</th>
+						<th>Oluşturan</th>
+						<th>Durum</th>
+						<th>İşlemler</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>İsim</th>
+						<th>Oluşturma Tarihi</th>
+						<th>Oluşturan</th>
+						<th>Durum</th>
+						<th>İşlemler</th>
+					</tr>
+				</tfoot>
+				<tbody class="table-border-bottom-0">
+					@foreach (var genre in Model)
+					{
+						<tr name="@genre.Id">
+							<td>@genre.Name</td>
+							<td>@genre.CreatedDate.ToShortDateString()</td>
+							<td>@genre.CreatedBy</td>
+							<td>@(genre.IsDeleted ? "Pasif" : "Aktif")</td>
+							<td>
+								<a class="btn btn-primary btn-sm" data-id="@genre.Id" asp-area="Admin" asp-controller="Genre" asp-action="UndoDelete" asp-route-genreId="@genre.Id"><i class='bx bx-undo'></i>
+							</a>
+								@*<a class="btn btn-danger btn-sm" data-id="@genre.Id" asp-area="Admin" asp-controller="Genre" asp-action="Delete" asp-route-genreId="@genre.Id"><i class="bx bx-minus-circle"></i></a>*@
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!--/ Basic Bootstrap Table -->
+
+
+
+</div>
+
+@section Scripts{
+	<script src="~/js/genreIndex.js" type="application/ecmascript"></script>
+}

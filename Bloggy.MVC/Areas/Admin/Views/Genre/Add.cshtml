@@ -17,12 +17,13 @@
 	
 						<div>
 							<label asp-for="Name" id="defaultFormControlInput" class="form-label">Tür</label>
-							<input asp-for="Name" type="text" class="form-control" id="defaultFormControlInput" placeholder="Lütfen Yazı Türü İsmi Giriniz" aria-describedby="defaultFormControlHelp">
+							<input asp-for="Name" type="text" class="form-control mb-3" id="defaultFormControlInput" placeholder="Lütfen Yazı Türü İsmi Giriniz" aria-describedby="defaultFormControlHelp">
 							<span asp-validation-for="Name" class="text-danger"></span>
 						</div>
-					</div>
-					<div class="form-group">
+					
+						<div class="form-group">
 						<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+						</div>
 					</div>
 				</form>
 			</div>

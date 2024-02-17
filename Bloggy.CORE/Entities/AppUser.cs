@@ -12,8 +12,9 @@ namespace Bloggy.CORE.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public Guid ImageId { get; set; }
-        public Image Image { get; set; }
+        public Guid ImageId { get; set; } = Guid.Parse("5AA0376E-D526-4FA5-8D48-5DDA2D9CB585");
+
+		public Image Image { get; set; }
 
         public ICollection<Article> Articles { get; set; }
     }

@@ -77,14 +77,19 @@ namespace Bloggy.SERVICE.Services.Concrete
 
 				article.ImageId = image.Id;
 			}
-
-			article.Title = articleUpdateDTO.Title;
-			article.Content = articleUpdateDTO.Content;
-			article.GenreId = articleUpdateDTO.GenreId;
-			article.UpdatedDate = DateTime.Now;
-			article.UpdatedBy = userEmail;
+			else
+			{
+				_mapper.Map(articleUpdateDTO, article);
+				//article.Title = articleUpdateDTO.Title;
+				//article.Content = articleUpdateDTO.Content;
+				//article.GenreId = articleUpdateDTO.GenreId;
+				article.UpdatedDate = DateTime.Now;
+				article.UpdatedBy = userEmail;
+				
+			}
 			await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
 			await _unitOfWork.SaveAsync();
+
 
 		}
 		public async Task SafeDeleteArticleAsync(Guid articleId)
@@ -97,6 +102,26 @@ namespace Bloggy.SERVICE.Services.Concrete
 			article.DeletedBy = userEmail;
 			await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
 			await _unitOfWork.SaveAsync();
+		}
+
+		public async Task<List<ArticleDTO>> GetAllArticlesWithGenreDeletedAsync()
+		{
+			var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x => x.IsDeleted == true, x => x.Genre);
+			var map = _mapper.Map<List<ArticleDTO>>(articles);
+			return map;
+		}
+
+		public async Task UndoDeleteArticleAsync(Guid articleId)
+		{
+			var userEmail = _user.GetLoggedInEmail();
+			var article = await _unitOfWork.GetRepository<Article>().GetByGuidAsync(articleId);
+
+			article.IsDeleted = false;
+			article.DeleteDate = null;
+			article.DeletedBy = null;
+			await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
+			await _unitOfWork.SaveAsync();
+
 		}
 	}
 }

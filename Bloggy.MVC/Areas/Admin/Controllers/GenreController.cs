@@ -19,6 +19,7 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
 		private readonly IMapper _mapper;
 		private readonly IToastNotification _toastNotification;
 
+
 		public GenreController(IGenreService genreService, IValidator<Genre> validator, IMapper mapper, IToastNotification toastNotification)
         {
 			_genreService = genreService;
@@ -31,6 +32,13 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
 			var genres = await _genreService.GetAllGenresNonDeleted();
 			return View(genres);
 		}
+
+		public async Task<IActionResult> DeletedGenres()
+		{
+			var genres = await _genreService.GetAllGenresDeleted();
+			return View(genres);
+		}
+
 		[HttpGet]
 		public IActionResult Add()
 		{
@@ -52,6 +60,27 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
 			result.AddToModelState(this.ModelState);
 			return View();
 		}
+		//modal için post işlemi
+		public async Task<IActionResult> AddWithAjax([FromBody] GenreAddDTO genreAddDTO)
+		{
+			var map = _mapper.Map<Genre>(genreAddDTO);
+			var result = await _validator.ValidateAsync(map);
+			if (result.IsValid)
+			{
+				await _genreService.CreateGenreAsync(genreAddDTO);
+				_toastNotification.AddSuccessToastMessage("Makale türünüz başarı ile eklendi");
+				return Json(new ToastrOptions { MessageClass = "Makale türünüz başarı ile eklendi" });
+				//return Json("Başarılı");
+			}
+			else
+			{
+				_toastNotification.AddErrorToastMessage(result.Errors.FirstOrDefault().ErrorMessage, new ToastrOptions { Title = "İşlem Başarısız!" });
+				return Json(result.Errors.FirstOrDefault().ErrorMessage);
+			}
+		}
+
+
+
 		[HttpGet]
 		public async Task<IActionResult> Update(Guid genreId)
 		{
@@ -80,6 +109,14 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
 		{
 			await _genreService.SafeDeleteGenreAsync(genreId);
 			_toastNotification.AddSuccessToastMessage("Makale türü başarı ile silindi");
+			return RedirectToAction("Index", "Genre", new { Area = "Admin" });
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> UndoDelete(Guid genreId)
+		{
+			await _genreService.UndoDeleteGenreAsync(genreId);
+			_toastNotification.AddSuccessToastMessage("Silme işlemi başarıyla geri alındı.");
 			return RedirectToAction("Index", "Genre", new { Area = "Admin" });
 		}
 	}

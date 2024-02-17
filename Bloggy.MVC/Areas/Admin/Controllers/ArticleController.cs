@@ -4,6 +4,7 @@ using Bloggy.SERVICE.DTOs.Articles;
 using Bloggy.SERVICE.Extensions;
 using Bloggy.SERVICE.Services.Interfaces;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
@@ -26,12 +27,24 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
             _validator = validator;
 			_toastNotification = toastNotification;
 		}
+
+
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin, Admin, User")]
         public async Task<IActionResult> Index()
         {
             var articles = await _articleService.GetAllArticlesWithCategoryNonDeletedAsync();
             return View(articles);
         }
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin, Admin")]
+        public async Task<IActionResult> DeletedArticles()
+		{
+			var articles = await _articleService.GetAllArticlesWithGenreDeletedAsync();
+			return View(articles);
+		}
+		[HttpGet]
+        [Authorize(Roles = "SuperAdmin, Admin, User")]
         public async Task<IActionResult> Add()
         {
             var genres = await _genreService.GetAllGenresNonDeleted();
@@ -39,7 +52,8 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
             return View(new ArticleAddDTO { Genres = genres } );
         }
 		[HttpPost]
-		public async Task<IActionResult> Add(ArticleAddDTO articleAddDTO)
+        [Authorize(Roles = "SuperAdmin, Admin, User")]
+        public async Task<IActionResult> Add(ArticleAddDTO articleAddDTO)
 		{
             var map = _mapper.Map<Article>(articleAddDTO);
             var result = await _validator.ValidateAsync(map);
@@ -59,6 +73,7 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
 			return View(new ArticleAddDTO { Genres = genres });
 		}
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin, Admin, User")]
         public async Task<IActionResult> Update(Guid articleId)
         {
             var article = await _articleService.GetArticleWithGenreNonDeletedAsync(articleId);
@@ -69,6 +84,7 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
             return View(articleUpdateDTO);
         }
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin, User")]
         public async Task<IActionResult> Update (ArticleUpdateDTO articleUpdateDTO)
         {
 			var map = _mapper.Map<Article>(articleUpdateDTO);
@@ -91,10 +107,19 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
             return View(articleUpdateDTO);
         }
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Delete (Guid articleId)
         {
             await _articleService.SafeDeleteArticleAsync(articleId);
 			_toastNotification.AddSuccessToastMessage("Makaleniz başarı ile silindi");
+			return RedirectToAction("Index", "Article", new { Area = "Admin" });
+		}
+
+        [Authorize(Roles = "SuperAdmin, Admin")]
+        public async Task<IActionResult> UndoDelete(Guid articleId)
+		{
+			await _articleService.UndoDeleteArticleAsync(articleId);
+			_toastNotification.AddSuccessToastMessage("Silme işlemi başarıyla geri alındı");
 			return RedirectToAction("Index", "Article", new { Area = "Admin" });
 		}
 	}

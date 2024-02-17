@@ -19,7 +19,7 @@ namespace Bloggy.CORE.Entities
 			FileType = fileType;
 			CreatedBy = createdBy;
 		}
-		public string FileName { get; set; }
+		public string FileName { get; set; } = "Undefined";
         public string FileType { get; set; }
 
         public ICollection<Article> Articles { get; set; }

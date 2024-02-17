@@ -74,5 +74,24 @@ namespace Bloggy.SERVICE.Services.Concrete
 			await _unitOfWork.GetRepository<Genre>().UpdateAsync(genre);
 			await _unitOfWork.SaveAsync();
 		}
+
+		public async Task<List<GenreDTO>> GetAllGenresDeleted()
+		{
+			var genres = await _unitOfWork.GetRepository<Genre>().GetAllAsync(x => x.IsDeleted == true);
+			var map = _mapper.Map<List<GenreDTO>>(genres);
+			return map;
+		}
+
+		public async Task UndoDeleteGenreAsync(Guid genreId)
+		{
+			var userEmail = _user.GetLoggedInEmail();
+			var genre = await _unitOfWork.GetRepository<Genre>().GetByGuidAsync(genreId);
+
+			genre.IsDeleted = false;
+			genre.DeleteDate = null;
+			genre.DeletedBy = userEmail;
+			await _unitOfWork.GetRepository<Genre>().UpdateAsync(genre);
+			await _unitOfWork.SaveAsync();
+		}
 	}
 }

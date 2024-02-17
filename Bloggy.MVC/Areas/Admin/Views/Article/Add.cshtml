@@ -10,7 +10,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card mb-4">
-				<h5 class="card-header">Default</h5>
+				<h5 class="card-header">Ekle</h5>
 				<form asp-controller="Article" asp-action="Add" method="post" enctype="multipart/form-data">
 					<div asp-validation-summary="ModelOnly"></div>
 					<div class="card-body">
@@ -27,32 +27,30 @@
 						<br />
 
 						<br />
-						<div>
+						<div class ="card-body>
 							<label asp-for="Title" id="defaultFormControlInput" class="form-label">Başlık</label>
 							<input asp-for="Title" type="text" class="form-control" id="defaultFormControlInput" placeholder="Lütfen Başlık Giriniz" aria-describedby="defaultFormControlHelp">
 							<span asp-validation-for="Title" class="text-danger"></span>
 						</div>
-					</div>
-					<div class="card-body">
-						<div>
+					
+						<div class="card-body">
 							<label asp-for="Content" for="defaultFormControlInput" class="form-label">İÇERİK</label>
 							<textarea asp-for="Content" type="text" class="form-control mb-3" id="defaultFormControlInput" style="min-height:300px" placeholder="Lütfen Makalenizi Ekleyiniz" aria-describedby="defaultFormControlHelp"></textarea>
 							<span asp-validation-for="Content" class="text-danger"></span>
 						</div>
-					</div>
-					<div class="card-body">
-						<div>
+						<div class="card-body">
+						
 							<label asp-for="Photo" for="defaultFormControlInput" class="form-label">Resim Seçiniz</label>
 							<input asp-for="Photo" type="file" accept="image/*" class="form-control mb-3" id="defaultFormControlInput" aria-describedby="defaultFormControlHelp">
 							<span asp-validation-for="Photo" class="text-danger"></span>
+						
+						</div>
+
+
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
 						</div>
 					</div>
-
-
-					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
-					</div>
-
 				</form>
 			</div>
 		</div>
@@ -88,14 +86,17 @@
 </div>
 
 
-@section Scripts 
+@section Scripts
 
-{
-	var app = app || {};
-	app.Urls = app.Urls || {};
+	{
+	<script src="~/js/genreAdd.js"></script>
+	<script>
+		var app = app || {};
+		app.Urls = app.Urls || {};
 
-	app.Urls.baseUrl = '@Url.Content("~")' ;
-	app.Urls.genreAddUrl = 
-	app.Urls.articleAddUrl = "@(Url.Action("Add", "Article"))"
+		app.Urls.baseUrl = '@Url.Content("~")';
+		app.Urls.genreAddUrl = "@(Url.Action("AddWithAjax", "Genre"))";
+		app.Urls.articleAddUrl = "@(Url.Action("Add", "Article"))"
+	</script>
 
 }

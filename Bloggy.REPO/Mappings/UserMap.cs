@@ -63,7 +63,7 @@ namespace Bloggy.REPO.Mappings
                 SecurityStamp = Guid.NewGuid().ToString(),
                 ImageId = Guid.Parse("5AA0376E-D526-4FA5-8D48-5DDA2D9CB585")
             };
-            superAdmin.PasswordHash = CreatePasswordHash(superAdmin, "123");
+            superAdmin.PasswordHash = CreatePasswordHash(superAdmin, "123123");
 
             var admin = new AppUser
             {
@@ -84,6 +84,7 @@ namespace Bloggy.REPO.Mappings
             
             builder.HasData(superAdmin, admin);
         }
+
         private string CreatePasswordHash(AppUser user, string password)
         {
             var passwordHasher = new PasswordHasher<AppUser>();
