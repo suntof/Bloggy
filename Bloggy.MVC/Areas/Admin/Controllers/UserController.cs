@@ -140,5 +140,12 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
 			}
 			return View();
 		}
+
+
+
+		public async Task<IActionResult> Profile()
+		{
+			return View();
+		}
 	}
 }
