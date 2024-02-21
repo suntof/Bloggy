@@ -18,6 +18,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 
 namespace Bloggy.SERVICE.Extensions
 {
@@ -29,6 +30,7 @@ namespace Bloggy.SERVICE.Extensions
             var assembly = Assembly.GetExecutingAssembly();
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IImageHelper, ImageHelper>();
 
 

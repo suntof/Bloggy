@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bloggy.CORE.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace Bloggy.CORE.Entities
 {
-    public class AppUser : IdentityUser<Guid>
+    public class AppUser : IdentityUser<Guid>, IBaseEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -2,150 +2,160 @@
 using AutoMapper;
 using Bloggy.CORE.Entities;
 using Bloggy.SERVICE.DTOs.Users;
-using Microsoft.AspNetCore.Identity;
+using Bloggy.SERVICE.Extensions;
+using Bloggy.SERVICE.Services.Concrete;
+using Bloggy.SERVICE.Services.Interfaces;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 
 namespace Bloggy.MVC.Areas.Admin.Controllers
 {
-	[Area("Admin")]
-	public class UserController : Controller
-	{
-		private readonly UserManager<AppUser> _userManager;
-		private readonly IMapper _mapper;
-		private readonly RoleManager<AppRole> _roleManager;
-		private readonly IToastNotification _toastNotification;
+    [Area("Admin")]
+    public class UserController : Controller
+    {
+        private readonly IUserService userService;
+        private readonly IValidator<AppUser> validator;
+        private readonly IToastNotification toast;
+        private readonly IMapper mapper;
 
-		public UserController(UserManager<AppUser> userManager, IMapper mapper, RoleManager<AppRole> roleManager, IToastNotification toastNotification)
-		{
-			_userManager = userManager;
-			_mapper = mapper;
-			_roleManager = roleManager;
-			_toastNotification = toastNotification;
-		}
-		public async Task<IActionResult> Index()
-		{
-			var users = await _userManager.Users.ToListAsync();
-			var map = _mapper.Map<List<UserDTO>>(users);
+        public UserController(IUserService userService, IValidator<AppUser> validator, IToastNotification toast, IMapper mapper)
+        {
+            this.userService = userService;
+            this.validator = validator;
+            this.toast = toast;
+            this.mapper = mapper;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var result = await userService.GetAllUsersWithRoleAsync();
 
-			foreach (var item in map)
-			{
-				var findUser = await _userManager.FindByIdAsync(item.Id.ToString());
-				var role = string.Join("", await _userManager.GetRolesAsync(findUser));
+            return View(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            var roles = await userService.GetAllRolesAsync();
+            return View(new UserAddDTO { Roles = roles });
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(UserAddDTO userAddDto)
+        {
+            var map = mapper.Map<AppUser>(userAddDto);
+            var validation = await validator.ValidateAsync(map);
+            var roles = await userService.GetAllRolesAsync();
 
-				item.Role = role;
+            if (ModelState.IsValid)
+            {
+                var result = await userService.CreateUserAsync(userAddDto);
+                if (result.Succeeded)
+                {
+                    toast.AddSuccessToastMessage("İşlem Başarılı");
+                    return RedirectToAction("Index", "User", new { Area = "Admin" });
+                }
+                else
+                {
+                    result.AddToIdentityModelState(this.ModelState);
+                    validation.AddToModelState(this.ModelState);
+                    return View(new UserAddDTO { Roles = roles });
 
-			}
+                }
+            }
+            return View(new UserAddDTO { Roles = roles });
+        }
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid userId)
+        {
+            var user = await userService.GetAppUserByIdAsync(userId);
 
-			return View(map);
-		}
-		[HttpGet]
-		public async Task<IActionResult> Add()
-		{
-			var roles = await _roleManager.Roles.ToListAsync();
-			return View(new UserAddDTO { Roles = roles });
+            var roles = await userService.GetAllRolesAsync();
 
-		}
-		[HttpPost]
-		public async Task<IActionResult> Add(UserAddDTO userAddDTO)
-		{
-			var map = _mapper.Map<AppUser>(userAddDTO);
-			var roles = await _roleManager.Roles.ToListAsync();
+            var map = mapper.Map<UserUpdateDTO>(user);
+            map.Roles = roles;
+            return View(map);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(UserUpdateDTO userUpdateDto)
+        {
+            var user = await userService.GetAppUserByIdAsync(userUpdateDto.Id);
 
-			if (ModelState.IsValid)
-			{
-				map.UserName = userAddDTO.Email;
-				var result = await _userManager.CreateAsync(map, userAddDTO.Password);
-				if (result.Succeeded)
-				{
-					var findRole = await _roleManager.FindByIdAsync(userAddDTO.RoleId.ToString());
-					await _userManager.AddToRoleAsync(map, findRole.ToString());
-					_toastNotification.AddSuccessToastMessage("Kullanıcı başarı ile eklendi");
-					return RedirectToAction("Index", "User", new { Area = "Admin" });
-				}
-				else
-				{
-					foreach (var errors in result.Errors)
-					{
-						ModelState.AddModelError("", errors.Description);
-						return View(new UserAddDTO { Roles = roles });
-					}
-				}
-			}
-			return View(new UserAddDTO { Roles = roles });
-		}
-		[HttpGet]
-		public async Task<IActionResult> Update (Guid userId)
-		{
-			var user = await _userManager.FindByIdAsync(userId.ToString());
-			var roles = await _roleManager.Roles.ToListAsync();
+            if (user != null)
+            {
+                var roles = await userService.GetAllRolesAsync();
+                if (ModelState.IsValid)
+                {
+                    var map = mapper.Map(userUpdateDto, user);
+                    var validation = await validator.ValidateAsync(map);
 
-			var map = _mapper.Map<UserUpdateDTO>(user);
-			map.Roles= roles;
+                    if (validation.IsValid)
+                    {
+                        user.UserName = userUpdateDto.Email;
+                        user.SecurityStamp = Guid.NewGuid().ToString();
+                        var result = await userService.UpdateUserAsync(userUpdateDto);
+                        if (result.Succeeded)
+                        {
+                            toast.AddSuccessToastMessage("İşlem Başarılı");
+                            return RedirectToAction("Index", "User", new { Area = "Admin" });
+                        }
+                        else
+                        {
+                            result.AddToIdentityModelState(this.ModelState);
+                            return View(new UserUpdateDTO { Roles = roles });
+                        }
+                    }
+                    else
+                    {
+                        validation.AddToModelState(this.ModelState);
+                        return View(new UserUpdateDTO { Roles = roles });
+                    }
+                }
+            }
+            return NotFound();
+        }
+        public async Task<IActionResult> Delete(Guid userId)
+        {
+            var result = await userService.DeleteUserAsync(userId);
 
-			return View(map);
-		}
-		[HttpPost]
-		public async Task<IActionResult> Update ( UserUpdateDTO userUpdateDTO)
-		{
-			var user = await _userManager.FindByIdAsync(userUpdateDTO.Id.ToString());
-			if (user != null)
-			{
-				var userRole = string.Join("", await _userManager.GetRolesAsync(user));
-				var roles = await _roleManager.Roles.ToListAsync();
-				if (ModelState.IsValid)
-				{
-					_mapper.Map(userUpdateDTO, user);
-					user.UserName = userUpdateDTO.Email;
-					user.SecurityStamp = Guid.NewGuid().ToString();
-					var result = await _userManager.UpdateAsync(user);
-					if (result.Succeeded)
-					{
-						await _userManager.RemoveFromRoleAsync(user, userRole);
-						var findRole = await _roleManager.FindByIdAsync(userUpdateDTO.RoleId.ToString());
-						await _userManager.AddToRoleAsync(user, findRole.Name);
-						_toastNotification.AddSuccessToastMessage("Kullanıcı başarı ile güncellendi");
-						return RedirectToAction("Index", "User", new { Area = "Admin" });
-					}
-					else
-					{
-						foreach (var errors in result.Errors)
-						{
-							ModelState.AddModelError("", errors.Description);
-							return View(new UserUpdateDTO { Roles = roles });
-						}
-					}
-				}
-			}
-			return View();		
-		}
+            if (result.identityResult.Succeeded)
+            {
+                toast.AddSuccessToastMessage("İşlem Başarılı");
+                return RedirectToAction("Index", "User", new { Area = "Admin" });
+            }
+            else
+            {
+                result.identityResult.AddToIdentityModelState(this.ModelState);
+            }
+            return NotFound();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var profile = await userService.GetUserProfileAsync();
 
+            return View(profile);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Profile(UserProfileDTO userProfileDto)
+        {
 
-		public async Task<IActionResult> Delete (Guid userId)
-		{
-			var user = await _userManager.FindByIdAsync(userId.ToString());
-			var result = await _userManager.DeleteAsync(user);
-			if (result.Succeeded)
-			{
-				_toastNotification.AddSuccessToastMessage("Kullanıcı başarı ile silindi");
-				return RedirectToAction("Index", "User", new { Area = "Admin" });
-			}
-			else
-			{
-				foreach (var errors in result.Errors)
-				{
-					ModelState.AddModelError("", errors.Description);
-				}
-			}
-			return View();
-		}
-
-
-
-		public async Task<IActionResult> Profile()
-		{
-			return View();
-		}
-	}
+            if (ModelState.IsValid)
+            {
+                var result = await userService.UserProfileUpdateAsync(userProfileDto);
+                if (result)
+                {
+                    toast.AddSuccessToastMessage("İşlem Başarılı");
+                    return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                }
+                else
+                {
+                    var profile = await userService.GetUserProfileAsync();
+                    toast.AddErrorToastMessage("İşlem Başarısız");
+                    return View(profile);
+                }
+            }
+            else
+                return NotFound();
+        }
+    }
 }
