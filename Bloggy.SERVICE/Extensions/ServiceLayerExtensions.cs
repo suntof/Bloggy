@@ -32,6 +32,7 @@ namespace Bloggy.SERVICE.Extensions
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IImageHelper, ImageHelper>();
+            services.AddScoped<IDashbordService, DashboardService>();
 
 
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

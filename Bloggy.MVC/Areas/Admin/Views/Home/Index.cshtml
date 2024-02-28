@@ -35,19 +35,13 @@
                                     <div class="avatar flex-shrink-0">
                                         <img src="~/sneat(admin panel)/assets/img/icons/unicons/chart-success.png" alt="chart success" class="rounded">
                                     </div>
-                                    <div class="dropdown">
-                                        <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                        </div>
-                                    </div>
+                                    
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+
                                 </div>
-                                <span class="fw-medium d-block mb-1">Profit</span>
-                                <h3 class="card-title mb-2">$12,628</h3>
-                                <small class="text-success fw-medium"><i class='bx bx-up-arrow-alt'></i> +72.80%</small>
+                                <span class="fw-medium d-block mb-1">Toplam Makale Sayısı</span>
+                                <h3 class="card-title mb-2" id="totalArticleCount"></h3>
+                                <small class="text-success fw-medium"></small>
                             </div>
                         </div>
                     </div>
@@ -57,15 +51,6 @@
                                 <div class="card-title d-flex align-items-start justify-content-between">
                                     <div class="avatar flex-shrink-0">
                                         <img src="~/sneat(admin panel)/assets/img/icons/unicons/wallet-info.png" alt="Credit Card" class="rounded">
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="btn p-0" type="button" id="cardOpt6" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                        </div>
                                     </div>
                                 </div>
                                 <span>Sales</span>
@@ -80,11 +65,11 @@
             <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
                 <div class="card">
                     <div class="row row-bordered g-0">
-                        <div class="col-md-8">
-                            <h5 class="card-header m-0 me-2 pb-3">Total Revenue</h5>
-                            <div id="totalRevenueChart" class="px-2"></div>
+                        <div class="col-md-12">
+                            <h5 class="card-header m-0 me-2 pb-3">@DateTime.Now.Year Yılının Makale Analizi</h5>
+                            <div id="customTotalRevenueChart" class="px-2"></div>
                         </div>
-                        <div class="col-md-4">
+                        @*<div class="col-md-4">
                             <div class="card-body">
                                 <div class="text-center">
                                     <div class="dropdown">
@@ -122,7 +107,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             </div>
@@ -478,3 +463,15 @@
 
     <div class="content-backdrop fade"></div>
 </div>
+
+@section Scripts{
+    <script src="~/js/dashboardIndex.js"></script>
+    <script>
+        var app = app || {}
+        app.Urls = app.Urls || {}
+
+        app.Urls.yearlyArticlesUrl = "@(Url.Action("YearlyArticleCounts", "Home"))";
+        app.Urls.totalArticleCountUrl = "@(Url.Action("TotalArticleCount", "Home"))";
+        app.Urls.totalCategoryCountUrl = "@(Url.Action("TotalGenreCount", "Home"))";
+    </script>
+}
