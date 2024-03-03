@@ -20,7 +20,7 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var articles = await _articleService.GetAllArticlesWithCategoryNonDeletedAsync();
+            var articles = await _articleService.GetAllArticlesWithGenreNonDeletedAsync();
             return View(articles);
         }
         [HttpGet]

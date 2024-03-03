@@ -1,19 +1,17 @@
 ﻿
 
 
-
-
 $(document).ready(function () {
     var yearlyArticlesUrl = app.Urls.yearlyArticlesUrl;
     var totalArticleCountUrl = app.Urls.totalArticleCountUrl;
-    var totalCategoryCountUrl = app.Urls.totalCategoryCountUrl;
+    var totalGenreCountUrl = app.Urls.totalGenreCountUrl;
 
     $.ajax({
         type: "GET",
         url: totalArticleCountUrl,
         dataType: "json",
         success: function (data) {
-            $("h3#totalArticleCount").append(data);
+            $("h3#total ").append(data);
         },
         error: function () {
             toastr.error("Makale Analizleri yüklenirken hata oluştu", "Hata");
@@ -22,13 +20,13 @@ $(document).ready(function () {
     });
     $.ajax({
         type: "GET",
-        url: totalCategoryCountUrl,
+        url: totalGenreCountUrl,
         dataType: "json",
         success: function (data) {
-            $("h3#totalCategoryCount").append(data);
+            $("h3#totalGenreCount").append(data);
         },
         error: function () {
-            toastr.error("Makale Analizleri yüklenirken hata oluştu", "Hata");
+            toastr.error("Tür/Genre Analizleri yüklenirken hata oluştu", "Hata");
         }
 
     });

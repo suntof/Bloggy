@@ -47,7 +47,7 @@ namespace Bloggy.SERVICE.Services.Concrete
 			await _unitOfWork.SaveAsync();
 		}
 
-		public async Task<List<ArticleDTO>> GetAllArticlesWithCategoryNonDeletedAsync()
+		public async Task<List<ArticleDTO>> GetAllArticlesWithGenreNonDeletedAsync()
 		{
 			
 			var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x=>x.IsDeleted == false, x=>x.Genre);

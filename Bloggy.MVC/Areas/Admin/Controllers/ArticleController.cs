@@ -33,7 +33,7 @@ namespace Bloggy.MVC.Areas.Admin.Controllers
         [Authorize(Roles = "SuperAdmin, Admin, User")]
         public async Task<IActionResult> Index()
         {
-            var articles = await _articleService.GetAllArticlesWithCategoryNonDeletedAsync();
+            var articles = await _articleService.GetAllArticlesWithGenreNonDeletedAsync();
             return View(articles);
         }
         [HttpGet]
