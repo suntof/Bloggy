@@ -12,7 +12,8 @@ namespace Bloggy.SERVICE.Services.Interfaces
 	public interface IGenreService
 	{
 		Task<List<GenreDTO>> GetAllGenresNonDeleted();
-		Task<List<GenreDTO>> GetAllGenresDeleted();
+        Task<List<GenreDTO>> GetAllGenresNonDeletedTake24();
+        Task<List<GenreDTO>> GetAllGenresDeleted();
 		Task CreateGenreAsync(GenreAddDTO genreAddDTO);
 		Task<Genre> GetGenreByGuid(Guid id);
 		Task<string> UpdateGenreAsync(GenreUpdateDTO genreUpdateDTO);

@@ -35,7 +35,13 @@ namespace Bloggy.SERVICE.Services.Concrete
 			var map = _mapper.Map<List<GenreDTO>>(genres);
 			return map;
 		}
-		public async Task CreateGenreAsync(GenreAddDTO genreAddDTO)
+        public async Task<List<GenreDTO>> GetAllGenresNonDeletedTake24()
+        {
+            var genres = await _unitOfWork.GetRepository<Genre>().GetAllAsync(x => x.IsDeleted == false);
+            var map = _mapper.Map<List<GenreDTO>>(genres);
+            return map.Take(24).ToList();
+        }
+        public async Task CreateGenreAsync(GenreAddDTO genreAddDTO)
 		{
 			var userEmail = _user.GetLoggedInEmail();
 			Genre genre = new(genreAddDTO.Name, userEmail);
@@ -93,5 +99,7 @@ namespace Bloggy.SERVICE.Services.Concrete
 			await _unitOfWork.GetRepository<Genre>().UpdateAsync(genre);
 			await _unitOfWork.SaveAsync();
 		}
-	}
+
+        
+    }
 }

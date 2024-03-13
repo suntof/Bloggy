@@ -1,4 +1,5 @@
 using Bloggy.CORE.Entities;
+using Bloggy.MVC.Filters.ArticleVisitors;
 using Bloggy.REPO.Context;
 using Bloggy.REPO.Extensions;
 using Bloggy.SERVICE.Extensions;
@@ -18,7 +19,10 @@ namespace Bloggy.MVC
 			builder.Services.AddSession();
 
 			// Add services to the container.
-			builder.Services.AddControllersWithViews()
+			builder.Services.AddControllersWithViews( opt =>
+			{
+				opt.Filters.Add<ArticleVisitorFilter>();
+			})
 				.AddNToastNotifyToastr( new ToastrOptions()
 				{
 					PositionClass = ToastPositions.TopCenter,

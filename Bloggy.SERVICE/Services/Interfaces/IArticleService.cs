@@ -17,5 +17,9 @@ namespace Bloggy.SERVICE.Services.Interfaces
 		Task UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO);
 		Task SafeDeleteArticleAsync(Guid articleId);
 		Task UndoDeleteArticleAsync(Guid articleId);
-	}
+        Task<ArticleListDTO> GetAllByPagingAsync(Guid? genreId, int currentPage = 1, int pageSize = 3,
+           bool isAscending = false);
+        Task<ArticleListDTO> SearchAsync(string keyword, int currentPage = 1, int pageSize = 3,
+            bool isAscending = false);
+    }
 }
