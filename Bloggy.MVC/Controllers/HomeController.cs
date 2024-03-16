@@ -24,13 +24,20 @@ namespace Bloggy.MVC.Controllers
             _unitOfWork = unitOfWork;
         }
 
-		public async Task<IActionResult> Index()
-		{
-			var articles = await _articleService.GetAllArticlesWithGenreNonDeletedAsync();
-			return View(articles);
-		}
+        [HttpGet]
+        public async Task<IActionResult> Index(Guid? genreId, int currentPage = 1, int pageSize = 3, bool isAscending = false)
+        {
+            var articles = await _articleService.GetAllByPagingAsync(genreId, currentPage, pageSize, isAscending);
+            return View(articles);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Search(string keyword, int currentPage = 1, int pageSize = 3, bool isAscending = false)
+        {
+            var articles = await _articleService.SearchAsync(keyword, currentPage, pageSize, isAscending);
+            return View(articles);
+        }
 
-		public IActionResult Privacy()
+        public IActionResult Privacy()
 		{
 			return View();
 		}

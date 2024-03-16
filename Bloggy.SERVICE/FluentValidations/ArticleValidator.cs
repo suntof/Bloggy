@@ -23,7 +23,7 @@ namespace Bloggy.SERVICE.FluentValidations
 				.NotEmpty()
 				.NotNull()
 				.MinimumLength(3)
-				.MaximumLength(1000)
+				.MaximumLength(2000)
 				.WithName("İçerik");
 		}
 	}
